@@ -99,6 +99,7 @@ public class JobData {
             // Open the CSV file and set up pull out column header info and records
             Reader in = new FileReader(DATA_FILE);
             CSVParser parser = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+            //says to make a new parser that specifies the format, makes the first line the header and it takes in the new fiel reader as the input to parse
             List<CSVRecord> records = parser.getRecords();
             Integer numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
