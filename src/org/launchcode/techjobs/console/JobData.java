@@ -66,7 +66,7 @@ public class JobData {
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
-
+        //column is equal to user input and it outputs the value that corresponds
         // load data, if not already loaded
         loadData();
 
@@ -103,17 +103,18 @@ public class JobData {
             List<CSVRecord> records = parser.getRecords();
             Integer numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
+            //array containing each header in CSV [name,employer,location,position type,core competency]
 
             allJobs = new ArrayList<>();
-
+            //all jobs contains the hashmaps which correspond to each row of csv
             // Put the records into a more friendly format
             for (CSVRecord record : records) {
                 HashMap<String, String> newJob = new HashMap<>();
-
+                //puts each row into new hashmap
                 for (String headerLabel : headers) {
                     newJob.put(headerLabel, record.get(headerLabel));
                 }
-
+                //iterates through header array has key as header label and value as the item in that row)
                 allJobs.add(newJob);
             }
 
@@ -124,6 +125,8 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+
     }
+
 
 }

@@ -1,13 +1,20 @@
 package org.launchcode.techjobs.console;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+import static org.launchcode.techjobs.console.JobData.findAll;
 
 /**
  * Created by LaunchCode
  */
 public class TechJobs {
+
+
+
 
     private static Scanner in = new Scanner(System.in);
 
@@ -38,12 +45,12 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
+                    printJobs(findAll());
                 } else {
 
-                    ArrayList<String> results = JobData.findAll(columnChoice);
+                    ArrayList<String> results = findAll(columnChoice);
 
-                    System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
+                    //System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
                     for (String item : results) {
@@ -67,6 +74,7 @@ public class TechJobs {
                 }
             }
         }
+
     }
 
     // ﻿Returns the key of the selected item from the choices Dictionary
@@ -110,7 +118,20 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        //findAll();
+        for(int i=0; i<someJobs.size();i++){
+            System.out.println("*****");
+            for(Map.Entry<String, String> job: someJobs.get(i).entrySet()) {
 
-        System.out.println("printJobs is not implemented yet");
+                String key = job.getKey();
+                String value = job.getValue();
+
+                System.out.println(key + ": " + value);
+
+            }
+        }
     }
+
+
 }
+
