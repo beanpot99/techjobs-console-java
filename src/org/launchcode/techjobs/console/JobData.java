@@ -7,9 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -44,6 +42,7 @@ public class JobData {
         }
 
         return values;
+
     }
 
     public static ArrayList<HashMap<String, String>> findAll() {
@@ -57,12 +56,12 @@ public class JobData {
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param column Column that should be searched.
+     * @param value  Value of teh field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -71,17 +70,26 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
+        Boolean noResults;
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
             if (aValue.contains(value)) {
                 jobs.add(row);
+            } else {
+                noResults = true;
             }
         }
-
+        if (noResults = true) {
+            System.out.println("No results found!");
+        }
+        //System.out.println(jobs);
         return jobs;
+    }
+
+    public static Boolean getIsDataLoaded() {
+        return isDataLoaded;
     }
 
     /**
@@ -128,5 +136,28 @@ public class JobData {
 
     }
 
+    public static ArrayList<HashMap<String, String>> findByValue(String searchWord) {
+        //returning array lists with hashmaps inside
+        loadData();
+        ArrayList<HashMap<String, String>> findJobs = new ArrayList<>();
+        for(HashMap<String,String> map: allJobs){
+            for(Map.Entry<String,String> entry: map.entrySet()){
+                String value = entry.getValue();
+                String[] searchArr = searchWord.split(" ");
+                String[] valueArr = value.split(" ");
+                for(int i=0;i<searchArr.length;i++){
+                    for(int j=0;j<valueArr.length;j++){
+                        if(searchArr[i]==valueArr[j]){
+                            if (!findJobs.contains(entry)) {
+                                findJobs.add(map);
+                            }
+                        }
+                    }
+                }
 
+            }
+        }
+        return findJobs;
+    }
+//findAll()
 }
