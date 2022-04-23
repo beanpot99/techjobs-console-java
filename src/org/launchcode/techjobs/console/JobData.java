@@ -17,8 +17,13 @@ public class JobData {
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
 
+
+
     private static ArrayList<HashMap<String, String>> allJobs;
 
+    public static ArrayList<HashMap<String, String>> getAllJobs() {
+        return allJobs;
+    }
     /**
      * Fetch list of all values from loaded data,
      * without duplicates, for a given column.
@@ -26,6 +31,7 @@ public class JobData {
      * @param field The column to retrieve values from
      * @return List of all of the values of the given field
      */
+
     public static ArrayList<String> findAll(String field) {
 
         // load data, if not already loaded
@@ -33,7 +39,7 @@ public class JobData {
 
         ArrayList<String> values = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : getAllJobs()) {
             String aValue = row.get(field);
 
             if (!values.contains(aValue)) {
@@ -50,7 +56,7 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        return getAllJobs();
     }
 
     /**
@@ -71,7 +77,7 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
         Boolean noResults;
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : getAllJobs()) {
 
             String aValue = row.get(column);
 
@@ -140,18 +146,14 @@ public class JobData {
         //returning array lists with hashmaps inside
         loadData();
         ArrayList<HashMap<String, String>> findJobs = new ArrayList<>();
-        for(HashMap<String,String> map: allJobs){
+        for(HashMap<String,String> map: getAllJobs()){
             for(String key: map.keySet()){
                 String value = map.get(key);
-                String[] searchArr = searchWord.split(" \\s");
-                String[] valueArr = value.split(" \\s");
-                for(int i=0;i<searchArr.length;i++){
-                    for(int j=0;j<valueArr.length;j++){
-                        if(searchArr[i]==valueArr[j]){
-                            if (!findJobs.contains(map)) {
-                                findJobs.add(map);
-                            }
-                        }
+                value = value.toLowerCase().replaceAll("\\s", "");
+                searchWord = searchWord.toLowerCase().replaceAll("\\s", "");
+                if(value.contains(searchWord)){
+                    if(!findJobs.contains(map)){
+                        findJobs.add(map);
                     }
                 }
 
