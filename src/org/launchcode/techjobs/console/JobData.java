@@ -141,14 +141,14 @@ public class JobData {
         loadData();
         ArrayList<HashMap<String, String>> findJobs = new ArrayList<>();
         for(HashMap<String,String> map: allJobs){
-            for(Map.Entry<String,String> entry: map.entrySet()){
-                String value = entry.getValue();
-                String[] searchArr = searchWord.split(" ");
-                String[] valueArr = value.split(" ");
+            for(String key: map.keySet()){
+                String value = map.get(key);
+                String[] searchArr = searchWord.split(" \\s");
+                String[] valueArr = value.split(" \\s");
                 for(int i=0;i<searchArr.length;i++){
                     for(int j=0;j<valueArr.length;j++){
                         if(searchArr[i]==valueArr[j]){
-                            if (!findJobs.contains(entry)) {
+                            if (!findJobs.contains(map)) {
                                 findJobs.add(map);
                             }
                         }
@@ -157,6 +157,7 @@ public class JobData {
 
             }
         }
+
         return findJobs;
     }
 //findAll()
