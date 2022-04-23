@@ -145,21 +145,27 @@ public class JobData {
     public static ArrayList<HashMap<String, String>> findByValue(String searchWord) {
         //returning array lists with hashmaps inside
         loadData();
+        Boolean found=false;
         ArrayList<HashMap<String, String>> findJobs = new ArrayList<>();
         for(HashMap<String,String> map: getAllJobs()){
+
             for(String key: map.keySet()){
                 String value = map.get(key);
                 value = value.toLowerCase().replaceAll("\\s", "");
                 searchWord = searchWord.toLowerCase().replaceAll("\\s", "");
                 if(value.contains(searchWord)){
+                    found = true;
                     if(!findJobs.contains(map)){
                         findJobs.add(map);
                     }
                 }
 
             }
-        }
 
+        }
+        if(!found){
+            System.out.println("No results found!");
+        }
         return findJobs;
     }
 //findAll()
