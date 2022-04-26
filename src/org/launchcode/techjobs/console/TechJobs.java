@@ -129,6 +129,7 @@ public class TechJobs {
                     System.out.println("No search results found");
                 }
             }
+            System.out.println("***** \n");
         }
     }
 //printJobs(JobData.findByColumnAndValue(searchField, searchTerm))
